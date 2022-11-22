@@ -22,6 +22,8 @@ public class OrderServiceImpl implements OrderService {
         stockClient.decrement();
 
 
+
+
 //        System.out.println(1 / 0);
 
         orderMapper.createOrder();
