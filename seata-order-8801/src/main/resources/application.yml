@@ -1,0 +1,21 @@
+server:
+  port: 8801
+spring:
+  application:
+    name: seata-order
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+
+seata:
+  tx-service-group: mygroup
+  service:
+    vgroup-mapping:
+      mygroup: default

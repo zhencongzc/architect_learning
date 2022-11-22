@@ -1,0 +1,34 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: order
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+#      datasource:  #配置Sentinel的持久化
+#        nacos:
+#          nacos:
+#            serverAddr: localhost:8848
+#            groupId: DEFAULT_GROUP
+#            dataId: ttt.json
+#            ruleType: flow
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+service-url:
+  nacos-user-service: http://nacos-provider
+
+feign:
+  sentinel:
+    enabled: true

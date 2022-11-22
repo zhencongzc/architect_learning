@@ -1,0 +1,23 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: nacos-consumer-openFeign
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+
+logging:
+  level:
+    com.mashibing.cloudalibabaopenfeignconsumer8888.server.OpenFeignService: error
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
