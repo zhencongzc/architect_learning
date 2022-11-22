@@ -1,9 +1,10 @@
 package algorithmNote;
 
 /**
- * 实现算术运算
+ * 用位运算实现算术运算
  */
 public class ArithmeticOperation {
+
     public int add(int a, int b) {
         //a + b = a ^ b + (a & b) << 1
         int sum = a;
@@ -31,20 +32,6 @@ public class ArithmeticOperation {
         return res;
     }
 
-    public int div(int a, int b) {
-        int x = isNeg(a) ? negNum(a) : a;
-        int y = isNeg(b) ? negNum(b) : b;
-        //从30位开始递减右移a，当a>=b时右移i位，结果右数i位设置为1，a减去b左移i位的值
-        int res = 0;
-        for (int i = 30; i >= 0; i = minus(i, 1)) {
-            if (x >> i >= y) {
-                res |= 1 << i;
-                x = minus(x, y << i);
-            }
-        }
-        return isNeg(a) ^ isNeg(b) ? negNum(res) : res;
-    }
-
     public int divide(int a, int b) {
         if (a == Integer.MIN_VALUE && b == Integer.MIN_VALUE) {
             return 1;
@@ -59,6 +46,20 @@ public class ArithmeticOperation {
         return div(a, b);
     }
 
+    public int div(int a, int b) {
+        int x = isNeg(a) ? negNum(a) : a;
+        int y = isNeg(b) ? negNum(b) : b;
+        //从30位开始递减右移a，当a>=b时右移i位，结果右数i位设置为1，a减去b左移i位的值
+        int res = 0;
+        for (int i = 30; i >= 0; i = minus(i, 1)) {
+            if (x >> i >= y) {
+                res |= 1 << i;
+                x = minus(x, y << i);
+            }
+        }
+        return isNeg(a) ^ isNeg(b) ? negNum(res) : res;
+    }
+
     public int negNum(int a) {
         return add(~a, 1);
     }
@@ -66,4 +67,5 @@ public class ArithmeticOperation {
     public boolean isNeg(int a) {
         return a < 0;
     }
+
 }

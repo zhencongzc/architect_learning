@@ -1,13 +1,17 @@
-package algorithmNote;
+package algorithmNote.sort;
 
 import java.util.Stack;
 
 /**
  * 快速排序
+ * 时间复杂度：O(n * log n)
+ * 空间复杂度：O(log n)
+ * 稳定性：不稳定
  */
 public class QuickSort {
+
     /**
-     * 快速排序（递归）
+     * 递归实现
      */
     public static void quickSort1(int[] arr) {
         if (arr == null || arr.length < 2) return;
@@ -48,7 +52,7 @@ public class QuickSort {
     }
 
     /**
-     * 快速排序（非递归）
+     * 非递归实现
      */
     public static void quickSort2(int[] arr) {
         if (arr == null || arr.length < 2) return;
@@ -77,4 +81,5 @@ public class QuickSort {
             this.right = right;
         }
     }
+
 }

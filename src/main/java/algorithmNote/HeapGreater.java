@@ -2,6 +2,9 @@ package algorithmNote;
 
 import java.util.*;
 
+/**
+ * 手写加强堆
+ */
 public class HeapGreater<T> {
 
     private ArrayList<T> heap;

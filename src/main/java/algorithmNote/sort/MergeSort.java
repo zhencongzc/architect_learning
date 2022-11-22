@@ -1,11 +1,15 @@
-package algorithmNote;
+package algorithmNote.sort;
 
 /**
  * 归并排序
+ * 时间复杂度：O(n * log n)
+ * 空间复杂度：O(n)
+ * 稳定性：稳定
  */
 public class MergeSort {
+
     /**
-     * 归并排序（递归）
+     * 递归实现
      */
     public static void mergeSort1(int[] arr) {
         if (arr == null || arr.length < 2) return;
@@ -40,7 +44,7 @@ public class MergeSort {
     }
 
     /**
-     * 归并排序（非递归）
+     * 非递归实现
      */
     public static void mergeSort2(int[] arr) {
         if (arr == null || arr.length < 2) {
@@ -64,4 +68,5 @@ public class MergeSort {
             step <<= 1;
         }
     }
+
 }

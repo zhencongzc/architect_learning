@@ -2,8 +2,10 @@ package algorithmNote;
 
 /**
  * 小和问题
+ * 计算所有（当前数*右侧大于当前数的个数）的总和
  */
 public class SmallSum {
+
     public static int smallSum(int[] arr) {
         if (arr == null || arr.length == 0) return 0;
         return process(arr, 0, arr.length - 1);
@@ -124,4 +126,5 @@ public class SmallSum {
         }
         System.out.println(succeed ? "Nice!" : "Fucking fucked!");
     }
+
 }

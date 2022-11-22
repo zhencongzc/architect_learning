@@ -14,89 +14,104 @@ public class Solution {
         }
     }
 
-    // need n extra space
-    public static boolean isPalindrome1(Node head) {
-        Stack<Integer> stack = new Stack<>();
-        Node n = head;
-        while (n != null) {
-            stack.push(n.value);
-            n = n.next;
+    public static Node listPartition1(Node head, int pivot) {
+        if (head == null) {
+            return head;
         }
-        boolean res = true;
-        while (head != null) {
-            if (head.value != stack.pop()) {
-                res = false;
-                break;
-            }
-            head = head.next;
-        }
-        return res;
-    }
-
-    // need n/2 extra space
-    public static boolean isPalindrome2(Node head) {
-        if (head == null || head.next == null) {
-            return true;
-        }
-        Node right = head.next;
         Node cur = head;
-        while (cur.next != null && cur.next.next != null) {
-            right = right.next;
-            cur = cur.next.next;
+        int i = 0;
+        while (cur != null) {
+            i++;
+            cur = cur.next;
         }
-        Stack<Node> stack = new Stack<Node>();
-        while (right != null) {
-            stack.push(right);
-            right = right.next;
+        Node[] nodeArr = new Node[i];
+        i = 0;
+        cur = head;
+        for (i = 0; i != nodeArr.length; i++) {
+            nodeArr[i] = cur;
+            cur = cur.next;
         }
-        while (!stack.isEmpty()) {
-            if (head.value != stack.pop().value) {
-                return false;
-            }
-            head = head.next;
+        arrPartition(nodeArr, pivot);
+        for (i = 1; i != nodeArr.length; i++) {
+            nodeArr[i - 1].next = nodeArr[i];
         }
-        return true;
+        nodeArr[i - 1].next = null;
+        return nodeArr[0];
     }
 
-    // need O(1) extra space
-    public static boolean isPalindrome3(Node head) {
-        if (head == null || head.next == null) return true;
-        //快慢指针找中点
-        Node slow = head;
-        Node fast = head;
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        //翻转后半段
-        Node end = reverse(slow.next);
-        //依次比较
-        Node left = head;
-        Node ritht = end;
-        boolean res = true;
-        while (left != null && ritht != null) {
-            if (left.value != ritht.value) {
-                res = false;
-                break;
+    public static void arrPartition(Node[] nodeArr, int pivot) {
+        int small = -1;
+        int big = nodeArr.length;
+        int index = 0;
+        while (index != big) {
+            if (nodeArr[index].value < pivot) {
+                swap(nodeArr, ++small, index++);
+            } else if (nodeArr[index].value == pivot) {
+                index++;
+            } else {
+                swap(nodeArr, --big, index);
             }
-            left = left.next;
-            ritht = ritht.next;
         }
-        //恢复链表
-        reverse(end);
-        return res;
     }
 
-    private static Node reverse(Node head) {
-        Node pre = null;
-        Node next;
+    public static void swap(Node[] nodeArr, int a, int b) {
+        Node tmp = nodeArr[a];
+        nodeArr[a] = nodeArr[b];
+        nodeArr[b] = tmp;
+    }
+
+    public static Node listPartition2(Node head, int pivot) {
+        Node sH = null; // small head
+        Node sT = null; // small tail
+        Node eH = null; // equal head
+        Node eT = null; // equal tail
+        Node mH = null; // big head
+        Node mT = null; // big tail
+        Node next = null; // save next node
+        // every node distributed to three lists
         while (head != null) {
             next = head.next;
-            head.next = pre;
-            pre = head;
+            head.next = null;
+            if (head.value < pivot) {
+                if (sH == null) {
+                    sH = head;
+                    sT = head;
+                } else {
+                    sT.next = head;
+                    sT = head;
+                }
+            } else if (head.value == pivot) {
+                if (eH == null) {
+                    eH = head;
+                    eT = head;
+                } else {
+                    eT.next = head;
+                    eT = head;
+                }
+            } else {
+                if (mH == null) {
+                    mH = head;
+                    mT = head;
+                } else {
+                    mT.next = head;
+                    mT = head;
+                }
+            }
             head = next;
         }
-        return pre;
+        // 小于区域的尾巴，连等于区域的头，等于区域的尾巴连大于区域的头
+        if (sT != null) { // 如果有小于区域
+            sT.next = eH;
+            eT = eT == null ? sT : eT; // 下一步，谁去连大于区域的头，谁就变成eT
+        }
+        // 下一步，一定是需要用eT 去接 大于区域的头
+        // 有等于区域，eT -> 等于区域的尾结点
+        // 无等于区域，eT -> 小于区域的尾结点
+        // eT 尽量不为空的尾巴节点
+        if (eT != null) { // 如果小于区域和等于区域，不是都没有
+            eT.next = mH;
+        }
+        return sH != null ? sH : (eH != null ? eH : mH);
     }
 
     public static void printLinkedList(Node node) {
@@ -109,94 +124,17 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-
-        Node head = null;
-        printLinkedList(head);
-        System.out.print(isPalindrome1(head) + " | ");
-        System.out.print(isPalindrome2(head) + " | ");
-        System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
-
-        head = new Node(1);
-        printLinkedList(head);
-        System.out.print(isPalindrome1(head) + " | ");
-        System.out.print(isPalindrome2(head) + " | ");
-        System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        printLinkedList(head);
-        System.out.print(isPalindrome1(head) + " | ");
-        System.out.print(isPalindrome2(head) + " | ");
-        System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(1);
-        printLinkedList(head);
-        System.out.print(isPalindrome1(head) + " | ");
-        System.out.print(isPalindrome2(head) + " | ");
-        System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(3);
-        printLinkedList(head);
-        System.out.print(isPalindrome1(head) + " | ");
-        System.out.print(isPalindrome2(head) + " | ");
-        System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(1);
-        printLinkedList(head);
-        System.out.print(isPalindrome1(head) + " | ");
-        System.out.print(isPalindrome2(head) + " | ");
-        System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(3);
-        head.next.next.next = new Node(1);
-        printLinkedList(head);
-        System.out.print(isPalindrome1(head) + " | ");
-        System.out.print(isPalindrome2(head) + " | ");
-        System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(2);
-        head.next.next.next = new Node(1);
-        printLinkedList(head);
-        System.out.print(isPalindrome1(head) + " | ");
-        System.out.print(isPalindrome2(head) + " | ");
-        System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(3);
-        head.next.next.next = new Node(2);
-        head.next.next.next.next = new Node(1);
-        printLinkedList(head);
-        System.out.print(isPalindrome1(head) + " | ");
-        System.out.print(isPalindrome2(head) + " | ");
-        System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
+        Node head1 = new Node(7);
+        head1.next = new Node(9);
+        head1.next.next = new Node(1);
+        head1.next.next.next = new Node(8);
+        head1.next.next.next.next = new Node(5);
+        head1.next.next.next.next.next = new Node(2);
+        head1.next.next.next.next.next.next = new Node(5);
+        printLinkedList(head1);
+        // head1 = listPartition1(head1, 4);
+        head1 = listPartition2(head1, 5);
+        printLinkedList(head1);
 
     }
 }
