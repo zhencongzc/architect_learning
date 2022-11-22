@@ -61,16 +61,14 @@ public class Solution {
     }
 
     public static Node listPartition2(Node head, int pivot) {
-        Node sH = null; // small head
-        Node sT = null; // small tail
-        Node eH = null; // equal head
-        Node eT = null; // equal tail
-        Node mH = null; // big head
-        Node mT = null; // big tail
-        Node next = null; // save next node
-        // every node distributed to three lists
+        Node sH = null;
+        Node sT = null;
+        Node eH = null;
+        Node eT = null;
+        Node bH = null;
+        Node bT = null;
         while (head != null) {
-            next = head.next;
+            Node next = head.next;
             head.next = null;
             if (head.value < pivot) {
                 if (sH == null) {
@@ -78,7 +76,7 @@ public class Solution {
                     sT = head;
                 } else {
                     sT.next = head;
-                    sT = head;
+                    sT = sT.next;
                 }
             } else if (head.value == pivot) {
                 if (eH == null) {
@@ -86,32 +84,28 @@ public class Solution {
                     eT = head;
                 } else {
                     eT.next = head;
-                    eT = head;
+                    eT = eT.next;
                 }
             } else {
-                if (mH == null) {
-                    mH = head;
-                    mT = head;
+                if (bH == null) {
+                    bH = head;
+                    bT = head;
                 } else {
-                    mT.next = head;
-                    mT = head;
+                    bT.next = head;
+                    bT = bT.next;
                 }
             }
             head = next;
         }
-        // 小于区域的尾巴，连等于区域的头，等于区域的尾巴连大于区域的头
-        if (sT != null) { // 如果有小于区域
+        if (sH != null) {
             sT.next = eH;
-            eT = eT == null ? sT : eT; // 下一步，谁去连大于区域的头，谁就变成eT
+            eT = eT == null ? sT : eT;
         }
-        // 下一步，一定是需要用eT 去接 大于区域的头
-        // 有等于区域，eT -> 等于区域的尾结点
-        // 无等于区域，eT -> 小于区域的尾结点
-        // eT 尽量不为空的尾巴节点
-        if (eT != null) { // 如果小于区域和等于区域，不是都没有
-            eT.next = mH;
+        if (eH != null) {
+            eT.next = bH;
         }
-        return sH != null ? sH : (eH != null ? eH : mH);
+        return sH != null ? sH : eH != null ? eH : bH;
+
     }
 
     public static void printLinkedList(Node node) {
@@ -132,7 +126,7 @@ public class Solution {
         head1.next.next.next.next.next = new Node(2);
         head1.next.next.next.next.next.next = new Node(5);
         printLinkedList(head1);
-        // head1 = listPartition1(head1, 4);
+//         head1 = listPartition1(head1, 5);
         head1 = listPartition2(head1, 5);
         printLinkedList(head1);
 
