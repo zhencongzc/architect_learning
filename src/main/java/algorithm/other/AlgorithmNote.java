@@ -1,4 +1,4 @@
-package algorithmNote;
+package algorithm.other;
 
 public class AlgorithmNote {
 

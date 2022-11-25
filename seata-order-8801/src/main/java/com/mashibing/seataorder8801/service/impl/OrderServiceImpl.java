@@ -20,12 +20,7 @@ public class OrderServiceImpl implements OrderService {
     @GlobalTransactional
     public void createOrder() {
         stockClient.decrement();
-
-
-
-
 //        System.out.println(1 / 0);
-
         orderMapper.createOrder();
     }
 

@@ -1,4 +1,4 @@
-package algorithmNote.sort;
+package algorithm.sort;
 
 /**
  * 归并排序

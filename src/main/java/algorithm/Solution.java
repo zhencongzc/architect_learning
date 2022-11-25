@@ -1,8 +1,4 @@
-package algorithmNote;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Stack;
+package algorithm;
 
 public class Solution {
     public static class Node {

@@ -1,4 +1,4 @@
-package algorithmNote;
+package algorithm.other;
 
 /**
  * 用位运算实现算术运算

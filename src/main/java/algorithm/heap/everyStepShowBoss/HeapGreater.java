@@ -1,4 +1,4 @@
-package algorithmNote;
+package algorithm.heap.everyStepShowBoss;
 
 import java.util.*;
 

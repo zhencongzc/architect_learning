@@ -1,10 +1,13 @@
-package algorithmNote;
+package algorithm.heap.everyStepShowBoss;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 每个时间点客户可以买/退商品，返回每一步的topK
+ */
 public class EveryStepShowBoss {
 
     public static class Customer {

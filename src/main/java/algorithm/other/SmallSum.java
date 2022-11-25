@@ -1,4 +1,4 @@
-package algorithmNote;
+package algorithm.other;
 
 /**
  * 小和问题
