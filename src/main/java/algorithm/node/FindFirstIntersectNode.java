@@ -4,7 +4,7 @@ package algorithm.node;
  * 寻找链表交点
  * 两个链表可能有环，寻找其相交节点，没有返回null
  */
-public class Code01_FindFirstIntersectNode {
+public class FindFirstIntersectNode {
 
     public static class Node {
         public int value;
