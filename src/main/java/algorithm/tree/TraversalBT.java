@@ -21,10 +21,13 @@ public class TraversalBT {
     public static void recursive(Node head) {
         if (head == null) return;
         //先序
+        System.out.println(head.value);
         recursive(head.left);
         //中序
+//        System.out.println(head.value);
         recursive(head.right);
         //后序
+//        System.out.println(head.value);
     }
 
     //非递归先序遍历
@@ -32,16 +35,12 @@ public class TraversalBT {
         System.out.print("pre-order: ");
         if (head != null) {
             Stack<Node> stack = new Stack<>();
-            stack.add(head);
+            stack.push(head);
             while (!stack.isEmpty()) {
-                head = stack.pop();
-                System.out.print(head.value + " ");
-                if (head.right != null) {
-                    stack.push(head.right);
-                }
-                if (head.left != null) {
-                    stack.push(head.left);
-                }
+                Node pop = stack.pop();
+                System.out.print(pop.value + " ");
+                if (pop.right != null) stack.push(pop.right);
+                if (pop.left != null) stack.push(pop.left);
             }
         }
         System.out.println();
@@ -57,9 +56,9 @@ public class TraversalBT {
                     stack.push(cur);
                     cur = cur.left;
                 } else {
-                    cur = stack.pop();
-                    System.out.print(cur.value + " ");
-                    cur = cur.right;
+                    Node pop = stack.pop();
+                    System.out.print(pop.value + " ");
+                    cur = pop.right;
                 }
             }
         }
@@ -70,28 +69,23 @@ public class TraversalBT {
     public static void pos1(Node head) {
         System.out.print("pos-order: ");
         if (head != null) {
-            Stack<Node> s1 = new Stack<>();
-            Stack<Node> s2 = new Stack<>();
-            s1.push(head);
-            while (!s1.isEmpty()) {
-                head = s1.pop(); // 头 右 左
-                s2.push(head);
-                if (head.left != null) {
-                    s1.push(head.left);
-                }
-                if (head.right != null) {
-                    s1.push(head.right);
-                }
+            Stack<Node> stack1 = new Stack<>();
+            Stack<Node> stack2 = new Stack<>();
+            stack1.push(head);
+            while (!stack1.isEmpty()) {
+                Node pop = stack1.pop();
+                stack2.push(pop);
+                if (pop.left != null) stack1.push(pop.left);
+                if (pop.right != null) stack1.push(pop.right);
             }
-            // 左 右 头
-            while (!s2.isEmpty()) {
-                System.out.print(s2.pop().value + " ");
+            while (!stack2.isEmpty()) {
+                System.out.print(stack2.pop().value + " ");
             }
         }
         System.out.println();
     }
 
-	//单栈实现非递归后序遍历
+    //单栈实现非递归后序遍历
     public static void pos2(Node h) {
         System.out.print("pos-order: ");
         if (h != null) {
@@ -121,7 +115,6 @@ public class TraversalBT {
         head.left.right = new Node(5);
         head.right.left = new Node(6);
         head.right.right = new Node(7);
-
         pre(head);
         System.out.println("========");
         in(head);
@@ -131,6 +124,5 @@ public class TraversalBT {
         pos2(head);
         System.out.println("========");
     }
-
 
 }
