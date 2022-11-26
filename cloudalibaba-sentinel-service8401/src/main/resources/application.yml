@@ -13,6 +13,12 @@ spring:
         dashboard: localhost:8080
         port: 8719
       web-context-unify: false
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
 
 management:
   endpoints:
