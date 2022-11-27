@@ -1,5 +1,7 @@
 package algorithm.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -17,7 +19,9 @@ public class TraversalBT {
         }
     }
 
-    //递归遍历
+    /**
+     * 递归遍历
+     */
     public static void recursive(Node head) {
         if (head == null) return;
         //先序
@@ -30,7 +34,9 @@ public class TraversalBT {
 //        System.out.println(head.value);
     }
 
-    //非递归先序遍历
+    /**
+     * 非递归先序遍历
+     */
     public static void pre(Node head) {
         System.out.print("pre-order: ");
         if (head != null) {
@@ -46,7 +52,9 @@ public class TraversalBT {
         System.out.println();
     }
 
-    //非递归中序遍历
+    /**
+     * 非递归中序遍历
+     */
     public static void in(Node cur) {
         System.out.print("in-order: ");
         if (cur != null) {
@@ -65,7 +73,9 @@ public class TraversalBT {
         System.out.println();
     }
 
-    //非递归后序遍历
+    /**
+     * 非递归后序遍历
+     */
     public static void pos1(Node head) {
         System.out.print("pos-order: ");
         if (head != null) {
@@ -85,7 +95,9 @@ public class TraversalBT {
         System.out.println();
     }
 
-    //单栈实现非递归后序遍历
+    /**
+     * 单栈实现非递归后序遍历
+     */
     public static void pos2(Node h) {
         System.out.print("pos-order: ");
         if (h != null) {
@@ -107,6 +119,23 @@ public class TraversalBT {
         System.out.println();
     }
 
+    /**
+     * 层序遍历
+     */
+    public static void level(Node head) {
+        System.out.print("level-order: ");
+        if (head == null) return;
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(head);
+        while (!queue.isEmpty()) {
+            Node poll = queue.poll();
+            System.out.print(poll.value + " ");
+            if (poll.left != null) queue.add(poll.left);
+            if (poll.right != null) queue.add(poll.right);
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         Node head = new Node(1);
         head.left = new Node(2);
@@ -122,6 +151,8 @@ public class TraversalBT {
         pos1(head);
         System.out.println("========");
         pos2(head);
+        System.out.println("========");
+        level(head);
         System.out.println("========");
     }
 
