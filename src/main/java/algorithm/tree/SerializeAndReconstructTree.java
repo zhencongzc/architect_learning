@@ -37,9 +37,9 @@ public class SerializeAndReconstructTree {
      * 先序遍历序列化
      */
     public static Queue<String> preSerial(Node head) {
-        Queue<String> res = new LinkedList<>();
-        pres(head, res);
-        return res;
+        Queue<String> ans = new LinkedList<>();
+        pres(head, ans);
+        return ans;
     }
 
     public static void pres(Node head, Queue<String> ans) {
@@ -94,18 +94,14 @@ public class SerializeAndReconstructTree {
      * 先序遍历反序列化
      */
     public static Node buildByPreQueue(Queue<String> prelist) {
-        if (prelist == null || prelist.size() == 0) {
-            return null;
-        }
+        if (prelist == null || prelist.size() == 0) return null;
         return preb(prelist);
     }
 
     public static Node preb(Queue<String> prelist) {
-        String value = prelist.poll();
-        if (value == null) {
-            return null;
-        }
-        Node head = new Node(Integer.valueOf(value));
+        String poll = prelist.poll();
+        if (poll == null) return null;
+        Node head = new Node(Integer.valueOf(poll));
         head.left = preb(prelist);
         head.right = preb(prelist);
         return head;
@@ -115,11 +111,9 @@ public class SerializeAndReconstructTree {
      * 后序遍历反序列化
      */
     public static Node buildByPosQueue(Queue<String> poslist) {
-        if (poslist == null || poslist.size() == 0) {
-            return null;
-        }
-        // 左右中  ->  stack(中右左)
+        if (poslist == null || poslist.size() == 0) return null;
         Stack<String> stack = new Stack<>();
+        //先逆序 左右中 --> 中右左
         while (!poslist.isEmpty()) {
             stack.push(poslist.poll());
         }
@@ -127,11 +121,9 @@ public class SerializeAndReconstructTree {
     }
 
     public static Node posb(Stack<String> posstack) {
-        String value = posstack.pop();
-        if (value == null) {
-            return null;
-        }
-        Node head = new Node(Integer.valueOf(value));
+        String pop = posstack.pop();
+        if (pop == null) return null;
+        Node head = new Node(Integer.valueOf(pop));
         head.right = posb(posstack);
         head.left = posb(posstack);
         return head;
@@ -146,19 +138,19 @@ public class SerializeAndReconstructTree {
             ans.add(null);
         } else {
             ans.add(String.valueOf(head.value));
-            Queue<Node> queue = new LinkedList<Node>();
+            Queue<Node> queue = new LinkedList<>();
             queue.add(head);
             while (!queue.isEmpty()) {
-                head = queue.poll(); // head 父   子
-                if (head.left != null) {
-                    ans.add(String.valueOf(head.left.value));
-                    queue.add(head.left);
+                Node poll = queue.poll();
+                if (poll.left != null) {
+                    ans.add(String.valueOf(poll.left.value));
+                    queue.add(poll.left);
                 } else {
                     ans.add(null);
                 }
-                if (head.right != null) {
-                    ans.add(String.valueOf(head.right.value));
-                    queue.add(head.right);
+                if (poll.right != null) {
+                    ans.add(String.valueOf(poll.right.value));
+                    queue.add(poll.right);
                 } else {
                     ans.add(null);
                 }
@@ -171,33 +163,22 @@ public class SerializeAndReconstructTree {
      * 层序遍历反序列化
      */
     public static Node buildByLevelQueue(Queue<String> levelList) {
-        if (levelList == null || levelList.size() == 0) {
-            return null;
-        }
+        if (levelList == null || levelList.isEmpty()) return null;
         Node head = generateNode(levelList.poll());
-        Queue<Node> queue = new LinkedList<Node>();
-        if (head != null) {
-            queue.add(head);
-        }
-        Node node = null;
+        Queue<Node> queue = new LinkedList<>();
+        if (head != null) queue.add(head);
         while (!queue.isEmpty()) {
-            node = queue.poll();
+            Node node = queue.poll();
             node.left = generateNode(levelList.poll());
             node.right = generateNode(levelList.poll());
-            if (node.left != null) {
-                queue.add(node.left);
-            }
-            if (node.right != null) {
-                queue.add(node.right);
-            }
+            if (node.left != null) queue.add(node.left);
+            if (node.right != null) queue.add(node.right);
         }
         return head;
     }
 
     public static Node generateNode(String val) {
-        if (val == null) {
-            return null;
-        }
+        if (val == null) return null;
         return new Node(Integer.valueOf(val));
     }
 

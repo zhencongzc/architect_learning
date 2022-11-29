@@ -1,4 +1,1 @@
-/target/classes/algorithm/node/FindFirstIntersectNode$Node.class
-/target/classes/algorithm/node/FindFirstIntersectNode.class
-/target/classes/algorithm/tree/TraversalBT$Node.class
-/target/classes/algorithm/tree/TraversalBT.class
+*.class
