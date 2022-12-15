@@ -5,14 +5,28 @@ server:
 spring:
   application:
     name: nacos-config-client
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
   cloud:
     nacos:
       discovery:
-#        server-addr: localhost:8848 #Nacos服务注册中心地址
-      server-addr: http://192.168.93.124:81
+        server-addr: localhost:8848 #Nacos服务注册中心地址
+      #      server-addr: http://192.168.93.124:81
       config:
-#        server-addr: localhost:8848 #Nacos作为配置中心地址
-        server-addr: http://192.168.93.124:81
+        server-addr: localhost:8848 #Nacos作为配置中心地址
+        #        server-addr: http://192.168.93.124:81
         file-extension: yaml #指定yaml格式的配置
         group: DEFAULT_GROUP #分组
+        shared-configs[0]:
+          data_id: test.yaml
+          group: DEFAULT_GROUP
+          refresh: true
+        shared-configs[1]:
+          data_id: test1.yaml
+          group: DEFAULT_GROUP
+          refresh: true
 #        namespace: ee8e2c08-2490-418f-9306-00c8479f94af #命名空间
